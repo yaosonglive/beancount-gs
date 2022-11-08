@@ -44,3 +44,7 @@ func GetLedgerIndexFilePath(dataPath string) string {
 	LogInfo(dataPath, dataPath+"/index.bean")
 	return dataPath + "/index.bean"
 }
+
+func GetLedgerTagsMapFilePath(dataPath string) string {
+	return dataPath + "/.beancount-ns/tags_map.json"
+}

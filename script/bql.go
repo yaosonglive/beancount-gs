@@ -47,6 +47,9 @@ func GetQueryParams(c *gin.Context) QueryParams {
 	}
 	if c.Query("tag") != "" {
 		queryParams.Tag = c.Query("tag")
+		// 转换中文tag
+		ledgerConfig := GetLedgerConfigFromContext(c)
+		queryParams.Tag = GetTagByShow(ledgerConfig.Id, queryParams.Tag)
 		hasWhere = true
 	}
 	if c.Query("type") != "" {

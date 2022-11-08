@@ -196,6 +196,8 @@ func DeleteLedger(c *gin.Context) {
 	script.LogInfo(ledgerConfig.Mail, "Success clear ledger account cache "+ledgerConfig.Id)
 	// remove from account types cache
 	script.ClearLedgerAccountTypes(ledgerConfig.Id)
+	// 删除标签
+	script.ClearLedgerTags(ledgerConfig.Id)
 	script.LogInfo(ledgerConfig.Mail, "Success clear ledger account types cache "+ledgerConfig.Id)
 	// delete source file
 	err = os.RemoveAll(ledgerConfig.DataPath)

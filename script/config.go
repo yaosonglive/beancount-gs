@@ -253,6 +253,12 @@ func LoadLedgerAccounts(ledgerId string) error {
 		LogSystemError("Failed to load account types")
 		return loadErr
 	}
+	// 加载tags.json 到缓存
+	loadTagsErr := LoadLedgerTagsMap(config)
+	if loadTagsErr != nil {
+		LogSystemError("Failed to load tags")
+		return loadTagsErr
+	}
 	accountDirPath := config.DataPath + "/account"
 	dirs, err := os.ReadDir(accountDirPath)
 	if err != nil {

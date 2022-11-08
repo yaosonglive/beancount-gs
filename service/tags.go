@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/beancount-gs/script"
 	"github.com/gin-gonic/gin"
+	"strings"
 )
 
 type Tags struct {
@@ -19,9 +20,19 @@ func QueryTags(c *gin.Context) {
 	}
 
 	result := make([]string, 0)
+	m := make(map[string]bool, 0)
 	for _, t := range tags {
 		if t.Value != "" {
-			result = append(result, t.Value)
+			itemTags := strings.Split(t.Value, ",")
+			for _, rt := range itemTags {
+				rt = strings.TrimSpace(rt)
+				if rt != "" {
+					if _, ok := m[rt]; !ok {
+						result = append(result, script.GetShowTag(ledgerConfig.Id, rt))
+						m[rt] = true
+					}
+				}
+			}
 		}
 	}
 

@@ -6,13 +6,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
-	"strings"
-	"time"
-
 	"github.com/beancount-gs/script"
 	"github.com/gin-gonic/gin"
 	"github.com/shopspring/decimal"
+	"io"
+	"strings"
+	"time"
 )
 
 type Transaction struct {
@@ -54,6 +53,9 @@ func QueryTransactions(c *gin.Context) {
 		}
 		if transactions[i].Balance != "" {
 			transactions[i].Balance = strings.Fields(transactions[i].Balance)[0]
+		}
+		for ii, tag := range transactions[i].Tags {
+			transactions[i].Tags[ii] = script.GetShowTag(ledgerConfig.Id, tag)
 		}
 	}
 	OK(c, transactions)
@@ -158,6 +160,7 @@ func saveTransaction(c *gin.Context, addTransactionForm AddTransactionForm, ledg
 	line := fmt.Sprintf("\r\n%s * \"%s\" \"%s\"", addTransactionForm.Date, addTransactionForm.Payee, addTransactionForm.Desc)
 	if len(addTransactionForm.Tags) > 0 {
 		for _, tag := range addTransactionForm.Tags {
+			tag = getTag(c, tag)
 			line += "#" + tag + " "
 		}
 	}

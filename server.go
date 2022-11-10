@@ -92,6 +92,7 @@ func RegisterRouter(router *gin.Engine) {
 		authorized.POST("/import/wx", service.ImportWxPayCSV)
 		authorized.GET("/ledger/check", service.CheckLedger)
 		authorized.DELETE("/ledger", service.DeleteLedger)
+		authorized.GET("/icons/list", service.GetIcons)
 	}
 }
 

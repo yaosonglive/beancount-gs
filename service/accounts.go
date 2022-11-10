@@ -83,6 +83,7 @@ type AddAccountForm struct {
 	Account string `form:"account" binding:"required"`
 	// 账户计量单位可以为空
 	Currency string `form:"currency"`
+	Icon     string `form:"icon"`
 }
 
 func AddAccount(c *gin.Context) {
@@ -110,6 +111,14 @@ func AddAccount(c *gin.Context) {
 	if err != nil {
 		InternalError(c, err.Error())
 		return
+	}
+	// 添加icon
+	if accountForm.Icon != "" {
+		filePath := "./public/icons/" + accountForm.Icon + ".png"
+		if script.FileIfExist(filePath) {
+			// 复制文件
+			_ = script.CopyFile(filePath, "./public/icons/"+script.GetAccountIconName(accountForm.Account)+".png")
+		}
 	}
 	// 更新缓存
 	typ := script.GetAccountType(ledgerConfig.Id, accountForm.Account)

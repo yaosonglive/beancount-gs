@@ -27,6 +27,12 @@ type Config struct {
 	IsBak             bool   `json:"isBak"`
 	OpeningBalances   string `json:"openingBalances"`
 	CreateDate        string `json:"createDate,omitempty"`
+	CORPID            string `json:"CORPID"`
+	AGENTID           string `json:"AGENTID"`
+	AgentSecret       string `json:"AgentSecret"`
+	DOMAIN            string `json:"DOMAIN"`
+	LedgerName        string `json:"LedgerName"`
+	LedgerSecret      string `json:"LedgerSecret"`
 }
 
 type Account struct {

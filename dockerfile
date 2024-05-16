@@ -10,7 +10,7 @@ ENV GO111MODULE=on \
     PORT=80
 
 WORKDIR /tmp/build
-RUN git clone https://github.com/BaoXuebin/beancount-gs.git
+RUN git clone https://github.com/yaosonglive/beancount-gs.git
 
 WORKDIR /tmp/build/beancount-gs
 RUN mkdir -p public/default_icons && cp -rn public/icons/* public/default_icons

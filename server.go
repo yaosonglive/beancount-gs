@@ -94,6 +94,9 @@ func RegisterRouter(router *gin.Engine) {
 		authorized.DELETE("/ledger", service.DeleteLedger)
 		authorized.GET("/icons/list", service.GetIcons)
 	}
+	router.GET("/api/oauth2/work_weixin/check", service.Oauth2WorkWeixinCheck)
+	router.GET("/api/oauth2/work_weixin", service.Oauth2WorkWeixin)
+	router.GET("/api/oauth2/work_weixin/callback", service.Oauth2WorkWeixinCallback)
 }
 
 func main() {
@@ -109,6 +112,7 @@ func main() {
 		script.LogSystemError("Failed to load server config, " + err.Error())
 		return
 	}
+	service.InitWorkWeixin()
 	serverConfig := script.GetServerConfig()
 	// 若 DataPath == "" 则配置未初始化
 	if serverConfig.DataPath != "" {
